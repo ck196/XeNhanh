@@ -18,9 +18,9 @@ import android.util.Log;
 
 public class MainActivity extends Activity {
 
-	static final LatLng TutorialsPoint = new LatLng(21.021087, 105.829625);
+	static final LatLng Center = new LatLng(21.021087, 105.829625);
 	private GoogleMap googleMap;
-	private String TAG = "** pushAndroidActivity **";
+	public String TAG = "Check";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +34,11 @@ public class MainActivity extends Activity {
 			}
 			googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 			CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(
-					TutorialsPoint, 14);
+					Center, 14);
 			googleMap.animateCamera(yourLocation);
-			//googleMap.setMyLocationEnabled(true);
-			 Marker TP = googleMap.addMarker(new MarkerOptions().
-					 position(TutorialsPoint).title("TutorialsPoint"));
+			googleMap.setMyLocationEnabled(true);
+			// Marker TP = googleMap.addMarker(new MarkerOptions().
+			//		 position(Center).title("Current"));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -48,15 +48,14 @@ public class MainActivity extends Activity {
 		GCMRegistrar.checkDevice(this);
 		GCMRegistrar.checkManifest(this);
 
-		final String regId = GCMRegistrar.getRegistrationId(this);
+		 String regId = GCMRegistrar.getRegistrationId(this);
 
 		if (regId.equals("")) {
 			GCMRegistrar.register(this, SENDER_ID);
+			regId = GCMRegistrar.getRegistrationId(this);
 		} else {
-			Log.v(TAG, "Already registered");
+			Log.d(TAG, "Already registered: "+ regId);
 		}
-		Log.d("abc", "ID: " + regId);
-		Log.i(TAG, "registration id =====  " + regId);
 
 	}
 
